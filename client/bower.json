@@ -1,0 +1,14 @@
+{
+  "name": "audience-meter-client",
+  "version": "2.1.4",
+  "homepage": "https://github.com/pierregoutheraud/audience-meter",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

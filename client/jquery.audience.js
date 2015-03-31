@@ -1,54 +1,22 @@
 (function($, global)
 {
-    $.extend($.ajaxSettings.accepts, {stream: "text/event-stream"});
-
     function openXHRConnection(url, deferred)
     {
-        var offset = 0,
-            retryDelay = 2000,
-            xhr = global.XDomainRequest ? new global.XDomainRequest() : new global.XMLHttpRequest();
-        xhr.open('POST', url, true);
-        xhr.withCredentials = false;
-        xhr.setRequestHeader('Accept', 'text/event-stream');
-        $(xhr).bind('error abort load', function()
-        {
-            if (retryDelay >= 0)
-            {
-                setTimeout(function() {openConnection(url, deferred);}, retryDelay);
-            }
+      var es = new EventSource(url);
+      es.addEventListener('message', function(e){
+        var json = JSON.parse(e.data);
+        deferred.notify(json);
+      });
+      function retry(){
+        setTimeout(function(){
+          openXHRConnection(url, deferred);
+        }, 2000);
+      }
+      ('error abort load'.split(' ')).forEach(function(e){
+        es.addEventListener(e, function(e){
+          // retry();
         });
-        $(xhr).bind('progress', function()
-        {
-            while (true)
-            {
-                var nextOffset = this.responseText.indexOf('\n\n', offset);
-                if (nextOffset === -1) break;
-                var data = this.responseText.substring(offset, nextOffset);
-                offset = nextOffset + 2;
-
-                var lines = data.split('\n');
-                for (var i = 0, l = lines.length; i < l; i++)
-                {
-                    var info = lines[i].split(/:/, 2),
-                        value = parseInt(info[1], 10);
-                    switch (info[0])
-                    {
-                        case 'data':
-                            deferred.notify(value);
-                            break;
-                        case 'retry':
-                            retryDelay = value;
-                            break;
-                    }
-                }
-            }
-        });
-        deferred.done(function()
-        {
-            $(xhr).unbind();
-            xhr.abort();
-        });
-        xhr.send();
+      });
     }
 
     function openFlashConnection(url, deferred)
