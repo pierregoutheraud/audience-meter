@@ -2,11 +2,18 @@
 {
     function openXHRConnection(url, deferred)
     {
+      console.log('openXHRConnection');
       var es = new EventSource(url);
       es.addEventListener('message', function(e){
         var json = JSON.parse(e.data);
+        console.log(json);
         deferred.notify(json);
       });
+      es.addEventListener('error', function(e){
+        console.log('error',e);
+      });
+
+      /*
       function retry(){
         setTimeout(function(){
           openXHRConnection(url, deferred);
@@ -17,6 +24,7 @@
           // retry();
         });
       });
+      */
     }
 
     function openFlashConnection(url, deferred)

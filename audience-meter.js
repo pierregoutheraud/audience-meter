@@ -44,36 +44,36 @@ if (cluster.isMaster)
 {
     process.title = 'audience-meter: master';
 
-    var audience = require('./lib/audience').Audience
-    ({
-        notify_delta_ratio: options.notifyDeltaRatio,
-        notify_min_delay: options.notifyMinDelay,
-        notify_max_delay: options.notifyMaxDelay,
-        namespace_clean_delay: options.namespaceCleanDelay,
-        log: logger
-    });
+    // var audience = require('./lib/audience').Audience
+    // ({
+    //     notify_delta_ratio: options.notifyDeltaRatio,
+    //     notify_min_delay: options.notifyMinDelay,
+    //     notify_max_delay: options.notifyMaxDelay,
+    //     namespace_clean_delay: options.namespaceCleanDelay,
+    //     log: logger
+    // });
 
     require('./lib/master').Master
     ({
         workers: options.workers,
-        audience: audience,
+        // audience: audience,
         log: logger
     });
 
-    if (options.notificationPort)
-    {
-        require('./lib/notification').NotificationServer({port: options.notificationPort, audience: audience});
-    }
+    // if (options.notificationPort)
+    // {
+    //     require('./lib/notification').NotificationServer({port: options.notificationPort, audience: audience});
+    // }
 
-    if (options.demoPort)
-    {
-        require('./lib/demo').DemoServer({port: options.demoPort});
-    }
+    // if (options.demoPort)
+    // {
+    //     require('./lib/demo').DemoServer({port: options.demoPort});
+    // }
 
-    if (options.statsPort)
-    {
-        require('./lib/stats').StatsServer({port: options.statsPort, audience: audience});
-    }
+    // if (options.statsPort)
+    // {
+    //     require('./lib/stats').StatsServer({port: options.statsPort, audience: audience});
+    // }
 
     if (options.clusterAddr)
     {

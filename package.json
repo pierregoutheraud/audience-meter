@@ -5,8 +5,7 @@
   "dependencies":
   {
     "commander": "2.1.0",
-    "node-uuid": "1.4.1",
-    "msgpack": "0.2.2"
+    "node-uuid": "1.4.1"
   }
 }
 
