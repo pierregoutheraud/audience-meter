@@ -1,26 +1,33 @@
-<p>Audience: <span class="total">X</span></p>
-<div class="users"></div>
-<input class="username" type="username" value="p" placeholder="username"/>
-<input class="room" type="room" value="123" placeholder="room"/>
+<p>Audience: <span class="total"></span> <span class="users"></span></p>
+<input class="username" type="username" value="" placeholder="username"/>
+<input class="room" type="room" value="room1" placeholder="room"/>
+<button class="connect" type="button">Connect</button>
 
-<button type="button">Connect to audience-meter</button>
 <script src="bower_components/event-source-polyfill/eventsource.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.1.min.js"></script>
 <script src="jquery.audience.js"></script>
 <script>
 
-var connect = function(username, room){
-  var url = 'http://127.0.0.1/' + room + '?username=' + username;
-  $.audience(url, username).progress(function(data){
-    $('.total').text(data.count);
-    if( data.usernames )
-      $('.users').text(data.usernames.join(',') + ' joined !');
-  });
-};
+  $(document).ready(function(){
 
-var button = document.querySelector('button');
-button.addEventListener('click', function(){
-  connect( document.querySelector('.username').value, document.querySelector('.room').value )
-});
+    $('.username').val('a'+parseInt((Math.random()*1000)));
+
+    var connect = function(username, room){
+      var url = 'http://127.0.0.1/' + room + '?username=' + username;
+      $.audience(url, username).progress(function(data){
+        $('.total').text(data.audience);
+        if( data.added )
+          $('.users').text( '(' + data.added.join(',')+' joined )');
+        if( data.removed )
+          $('.users').text( '(' + data.removed.join(',')+' left )');
+      });
+    };
+    var buttonConnect = document.querySelector('.connect');
+    buttonConnect.addEventListener('click', function(){
+      connect( document.querySelector('.username').value, document.querySelector('.room').value )
+    });
+
+
+  });
 
 </script>

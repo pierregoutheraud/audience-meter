@@ -1,8 +1,8 @@
 (function($, global)
 {
+
     function openXHRConnection(url, deferred)
     {
-      console.log('openXHRConnection');
       var es = new EventSource(url);
       es.addEventListener('message', function(e){
         var json = JSON.parse(e.data);
@@ -10,7 +10,7 @@
         deferred.notify(json);
       });
       es.addEventListener('error', function(e){
-        console.log('error',e);
+        console.log(e);
       });
 
       /*
