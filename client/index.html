@@ -13,7 +13,7 @@
     $('.username').val('a'+parseInt((Math.random()*1000)));
 
     var connect = function(username, room){
-      var url = 'http://127.0.0.1/' + room + '?username=' + username;
+      var url = 'http://127.0.0.1:9999/' + room + '?username=' + username;
       $.audience(url, username).progress(function(data){
         $('.total').text(data.audience);
         if( data.added )
