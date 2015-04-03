@@ -46,6 +46,8 @@ if (cluster.isMaster)
     require('./lib/master').Master
     ({
         workers: options.workers,
+        lives: require('./lib/lives').Lives()
+
         // audience: audience
     });
 
@@ -64,16 +66,16 @@ if (cluster.isMaster)
     //     require('./lib/stats').StatsServer({port: options.statsPort, audience: audience});
     // }
 
-    if (options.clusterAddr)
-    {
-        require('./lib/cluster').ClusterManager
-        ({
-            notify_interval: options.clusterNotifyInterval,
-            node_timeout: options.clusterNodeTimeout,
-            multicast_addr: options.clusterAddr,
-            audience: audience
-        });
-    }
+    // if (options.clusterAddr)
+    // {
+    //     require('./lib/cluster').ClusterManager
+    //     ({
+    //         notify_interval: options.clusterNotifyInterval,
+    //         node_timeout: options.clusterNodeTimeout,
+    //         multicast_addr: options.clusterAddr,
+    //         audience: audience
+    //     });
+    // }
 }
 else
 {
