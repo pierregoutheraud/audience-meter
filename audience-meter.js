@@ -26,17 +26,7 @@ options
     .option('--notification-port <port>', 'Local port on which to bind the global notification server (default 2442, 0 to disable)', parseInt, 2442)
     .parse(process.argv);
 
-function logger(severity, message)
-{
-    if (severity == 'error')
-    {
-        console.error('[%s] [%s] %s', cluster.isMaster ? 'master' : 'child#' + process.pid, severity, message);
-    }
-    else if (options.debug)
-    {
-        console.log('[%s] [%s] %s', cluster.isMaster ? 'master' : 'child#' + process.pid, severity, message);
-    }
-}
+global.options = options;
 
 var workerIdx = 0;
 
@@ -56,8 +46,7 @@ if (cluster.isMaster)
     require('./lib/master').Master
     ({
         workers: options.workers,
-        // audience: audience,
-        log: logger
+        // audience: audience
     });
 
     // if (options.notificationPort)
@@ -82,8 +71,7 @@ if (cluster.isMaster)
             notify_interval: options.clusterNotifyInterval,
             node_timeout: options.clusterNodeTimeout,
             multicast_addr: options.clusterAddr,
-            audience: audience,
-            log: logger
+            audience: audience
         });
     }
 }
@@ -95,7 +83,6 @@ else
     ({
         uuid: options.enableUuid,
         increment_delay: options.incrementDelay,
-        max_conn_duration: options.maxConnDuration,
-        log: logger
+        max_conn_duration: options.maxConnDuration
     });
 }
