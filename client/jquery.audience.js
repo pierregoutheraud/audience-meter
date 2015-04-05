@@ -9,7 +9,7 @@
         deferred.notify(json);
       });
       es.addEventListener('error', function(e){
-        console.log(e);
+        console.log('Server not started.',e);
       });
 
       /*

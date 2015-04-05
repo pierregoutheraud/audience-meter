@@ -37,7 +37,8 @@
     };
     var buttonConnect = document.querySelector('.connect');
     buttonConnect.addEventListener('click', function(){
-      connect( document.querySelector('.username').value, document.querySelector('.room').value )
+      connect( document.querySelector('.username').value, document.querySelector('.room').value );
+      buttonConnect.parentElement.removeChild(buttonConnect);
     });
 
 
