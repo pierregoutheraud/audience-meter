@@ -3,7 +3,7 @@
   <span class="joined"></span><br/>
   <span class="left"></span>
 </p>
-<input class="url" type="text" value="http://localhost:9999" />
+<input class="url" type="text" value="" />
 <input class="username" type="text" value="" placeholder="username"/>
 <input class="room" type="text" value="room1" placeholder="room"/>
 <button class="connect" type="button">Connect</button>
@@ -15,9 +15,17 @@
 
   $(document).ready(function(){
 
+    var url, port = 9999;
+    if( window.location.host === '' )
+      url = 'http://localhost';
+    else
+      url = window.location.origin;
+    url += ':' + port;
+
+    $('.url').val(url)
     $('.username').val('a'+parseInt((Math.random()*1000)));
 
-    var connect = function(username, room){
+    var connect = function(username, room) {
       var url = $('.url').val() + '/' + room + '?username=' + username;
       console.log(url)
       $.audience(url, username).progress(function(data){
