@@ -16,7 +16,7 @@ options
                                                 'is recieved by a node (default 5 seconds)', parseInt, 5)
     .option('--notify-delta-ratio <ratio>', 'Minimum delta of number of members to reach before to notify ' +
                                             'listeners based on a fraction of the current number of members (default 0.1)', parseFloat, 0.1)
-    .option('--notify-min-delay <seconds>', 'Minimum delay between notifications (default 2)', parseFloat, 2)
+    .option('--notify-min-delay <seconds>', 'Minimum delay between notifications (default 1)', parseFloat, 1)
     .option('--notify-max-delay <seconds>', 'Maximum delay to wait before not sending notification ' +
                                             'because of min-delta not reached (default 25)', parseFloat, 25)
     .option('--increment-delay <seconds>', 'Number of seconds to wait before to increment the counter in order to mitigate de/connection floods', parseFloat, 0)

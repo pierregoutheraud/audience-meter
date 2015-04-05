@@ -1,6 +1,7 @@
 <p>
   Audience: <span class="total">?</span><br/>
-  <span class="users"></span>
+  <span class="joined"></span><br/>
+  <span class="left"></span>
 </p>
 <input class="url" type="text" value="http://localhost:9999" />
 <input class="username" type="text" value="" placeholder="username"/>
@@ -20,11 +21,10 @@
       var url = $('.url').val() + '/' + room + '?username=' + username;
       console.log(url)
       $.audience(url, username).progress(function(data){
+        $('.total, .joined, .left').text('');
         $('.total').text(data.audience);
-        if( data.added )
-          $('.users').text( data.added.join(',')+' joined');
-        if( data.removed )
-          $('.users').text( data.removed.join(',')+' left');
+        if( data.joined ) $('.joined').text( data.joined.join(',')+' joined');
+        if( data.left ) $('.left').text( data.left.join(',')+' left');
       });
     };
     var buttonConnect = document.querySelector('.connect');

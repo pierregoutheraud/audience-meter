@@ -5,9 +5,7 @@
     {
       var es = new EventSource(url);
       es.addEventListener('message', function(e){
-        console.log('message', e)
         var json = JSON.parse(e.data);
-        console.log(json);
         deferred.notify(json);
       });
       es.addEventListener('error', function(e){
